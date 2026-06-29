@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:http": "node dist/httpServer.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
