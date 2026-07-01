@@ -48,7 +48,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "add_hospital_appointment",
     {
       title: "병원 예약 등록",
-      description: "병원 예약을 음성/텍스트 자연어로 등록합니다.",
+      description: "챙기미에서 병원 예약을 음성/텍스트 자연어로 등록합니다. 병원 이름과 날짜·시간을 말해주시면 예약으로 저장합니다.",
+      annotations: {
+        title: "병원 예약 등록",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: false,
+      },
       inputSchema: {
         hospital_name: z.string(),
         datetime_text: z.string(),
@@ -63,7 +70,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "list_today_schedule",
     {
       title: "오늘 일정 한눈에 보기",
-      description: "오늘의 병원 예약과 복약 상태를 함께 조회합니다.",
+      description: "챙기미에서 오늘의 병원 예약과 복약 상태를 함께 조회합니다. 날짜를 지정하면 해당 날의 일정도 확인할 수 있습니다.",
+      annotations: {
+        title: "오늘 일정 조회",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         date: z.string().optional(),
       },
@@ -75,7 +89,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "add_medication_text",
     {
       title: "약 등록 (텍스트)",
-      description: "약 이름, 복용 시간대, 식전/식후를 텍스트로 등록합니다.",
+      description: "챙기미에서 약 이름, 복용 시간대(아침·점심·저녁), 식전/식후를 텍스트로 등록합니다.",
+      annotations: {
+        title: "약 등록",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: false,
+      },
       inputSchema: {
         medication_name: z.string(),
         time_slots: z.array(timeSlotSchema).min(1),
@@ -90,7 +111,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "mark_medication_taken",
     {
       title: "복약 완료 처리",
-      description: "약을 먹었는지/안 먹었는지 표시합니다. 이름 없이 시간대만 말해도 자동 매칭합니다.",
+      description: "챙기미에서 약을 먹었는지/안 먹었는지 표시합니다. 이름 없이 시간대(아침·점심·저녁)만 말해도 자동으로 매칭합니다.",
+      annotations: {
+        title: "복약 완료 표시",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         medication_id: z.string().optional(),
         medication_name: z.string().optional(),
@@ -106,7 +134,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "generate_share_summary",
     {
       title: "가족 공유문 생성",
-      description: "가족에게 복사해서 전달할 수 있는 공유 문구를 생성합니다 (직접 발송 아님).",
+      description: "챙기미에서 가족에게 복사해서 전달할 수 있는 병원 예약·복약 공유 문구를 생성합니다 (직접 발송 아님).",
+      annotations: {
+        title: "가족 공유문 생성",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         scope: z.enum(["today", "upcoming_appointment", "specific_appointment"]),
         appointment_id: z.string().optional(),
@@ -120,7 +155,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
     "update_share_scope",
     {
       title: "가족 공유 설정 변경",
-      description: "가족 공유를 켜거나 끄고, 공유 범위를 변경합니다 (옵트인).",
+      description: "챙기미에서 딸·아들 등 공유받는 사람별 공유 설정을 켜거나 끄고, 공유 범위(전체·예약만·복약만)를 변경합니다 (옵트인).",
+      annotations: {
+        title: "가족 공유 설정",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         recipient_label: z.string(),
         action: z.enum(["enable", "disable"]),
