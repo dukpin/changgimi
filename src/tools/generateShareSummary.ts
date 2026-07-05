@@ -1,4 +1,4 @@
-import { todayIsoKst } from "../dateUtils.js";
+import { todayIsoKst, weekdayIndexOfIso } from "../dateUtils.js";
 import type { ChaeggimiStore } from "../store.js";
 
 export interface GenerateShareSummaryInput {
@@ -19,7 +19,7 @@ function withSubjectParticle(label: string): string {
 function formatAppointmentText(ownerLabel: string, hospitalName: string, isoDateTime: string): string {
   const [datePart, timePart] = isoDateTime.split("T");
   const [, month, day] = datePart.split("-");
-  const weekday = ["일", "월", "화", "수", "목", "금", "토"][new Date(`${datePart}T00:00:00+09:00`).getDay()];
+  const weekday = ["일", "월", "화", "수", "목", "금", "토"][weekdayIndexOfIso(datePart)];
   const [hh, mm] = timePart.slice(0, 5).split(":").map(Number);
   const meridiem = hh < 12 ? "오전" : "오후";
   const hour12 = hh % 12 === 0 ? 12 : hh % 12;

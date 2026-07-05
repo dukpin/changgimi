@@ -57,10 +57,14 @@ export function createChaeggimiServer(store: ChaeggimiStore): McpServer {
         openWorldHint: false,
       },
       inputSchema: {
-        hospital_name: z.string(),
-        datetime_text: z.string(),
-        department: z.string().optional(),
-        memo: z.string().max(50).optional(),
+        hospital_name: z.string().describe("병원 이름 (예: 서울대병원, 이비인후과)"),
+        datetime_text: z
+          .string()
+          .describe(
+            "날짜와 시간을 모두 포함한 자연어 문자열. 반드시 날짜(오늘/내일/모레/요일/월일)와 시간(오전·오후 몇 시)을 함께 포함해야 합니다. 예: '내일 오전 10시', '다음주 화요일 오후 2시 30분', '7월 10일 오전 11시'. 시간을 모르면 사용자에게 먼저 물어보고 확인 후 호출하세요.",
+          ),
+        department: z.string().optional().describe("진료과 (예: 내과, 정형외과). 모르면 생략 가능."),
+        memo: z.string().max(50).optional().describe("50자 이내 메모. 선택 사항."),
       },
     },
     async (input) => jsonResult(addHospitalAppointment(store, { user_id: DEMO_USER_ID, ...input })),

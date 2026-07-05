@@ -25,7 +25,7 @@ export function todayIsoKst(now: Date = new Date()): string {
 
 const WEEKDAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
 
-function weekdayIndexOfIso(isoDate: string): number {
+export function weekdayIndexOfIso(isoDate: string): number {
   const [y, m, d] = isoDate.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
 }
@@ -98,9 +98,13 @@ export function parseRelativeDateTime(
   const meridiem = timeMatch[1];
   let hour = Number(timeMatch[2]);
   const minute = timeMatch[3] ? Number(timeMatch[3]) : 0;
+  if (hour > 23 || minute > 59) {
+    return { ok: false, reason: "ambiguous_time" };
+  }
   if (meridiem === "오후" && hour < 12) hour += 12;
   if (meridiem === "오전" && hour === 12) hour = 0;
-  if (!meridiem && hour < 8) hour += 12; // "3시"만 있으면 오후로 추정하지 않고 그대로 두되, 새벽 시간은 보정하지 않음(요구사항 단순화)
+  // 오전/오후 표기 없이 1~7시만 말하면 낮 시간(오후)으로 간주해 보정한다.
+  if (!meridiem && hour >= 1 && hour < 8) hour += 12;
 
   const hhmm = `${pad(hour)}:${pad(minute)}`;
   return { ok: true, isoDate, hhmm };

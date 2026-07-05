@@ -10,7 +10,9 @@ export interface ListTodayScheduleInput {
 const SLOT_ORDER: TimeSlot[] = ["아침", "점심", "저녁"];
 
 export function listTodaySchedule(store: ChaeggimiStore, input: ListTodayScheduleInput) {
-  const date = input.date ?? todayIsoKst();
+  const today = todayIsoKst();
+  const date = input.date ?? today;
+  const dayLabel = date === today ? "오늘" : date;
 
   const appointments = store.listAppointmentsByDate(input.user_id, date).map((a) => ({
     appointment_id: a.appointment_id,
@@ -39,13 +41,13 @@ export function listTodaySchedule(store: ChaeggimiStore, input: ListTodaySchedul
       date,
       appointments,
       medications,
-      summary_message: "오늘은 등록된 병원/약 일정이 없어요.",
+      summary_message: `${dayLabel}은 등록된 병원/약 일정이 없어요.`,
     };
   }
 
   const parts: string[] = [];
   for (const appt of appointments) {
-    parts.push(`오늘 ${appt.time} ${appt.hospital_name} 예약 있어요.`);
+    parts.push(`${dayLabel} ${appt.time} ${appt.hospital_name} 예약 있어요.`);
   }
   for (const med of medications) {
     parts.push(`${med.time_slot} ${med.name}은 ${med.taken ? "드셨어요" : "아직이에요"}.`);

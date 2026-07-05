@@ -33,9 +33,10 @@ export class ChaeggimiStore {
     );
   }
 
-  getUpcomingAppointment(userId: string): HospitalAppointment | null {
+  getUpcomingAppointment(userId: string, now: Date = new Date()): HospitalAppointment | null {
+    const nowMs = now.getTime();
     const list = this.appointments
-      .filter((a) => a.user_id === userId)
+      .filter((a) => a.user_id === userId && new Date(a.appointment_at).getTime() >= nowMs)
       .sort((a, b) => a.appointment_at.localeCompare(b.appointment_at));
     return list[0] ?? null;
   }

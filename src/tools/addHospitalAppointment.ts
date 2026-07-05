@@ -1,4 +1,4 @@
-import { combineDateTime, parseRelativeDateTime } from "../dateUtils.js";
+import { combineDateTime, parseRelativeDateTime, weekdayIndexOfIso } from "../dateUtils.js";
 import type { ChaeggimiStore } from "../store.js";
 
 export interface AddHospitalAppointmentInput {
@@ -13,7 +13,7 @@ const WEEKDAY_LABEL = ["일", "월", "화", "수", "목", "금", "토"];
 
 function formatConfirm(isoDate: string, hhmm: string, hospitalName: string): string {
   const [, month, day] = isoDate.split("-");
-  const weekday = WEEKDAY_LABEL[new Date(`${isoDate}T00:00:00+09:00`).getDay()];
+  const weekday = WEEKDAY_LABEL[weekdayIndexOfIso(isoDate)];
   const [hh, mm] = hhmm.split(":").map(Number);
   const meridiem = hh < 12 ? "오전" : "오후";
   const hour12 = hh % 12 === 0 ? 12 : hh % 12;

@@ -1,0 +1,22 @@
+<svg width="1200" height="1200" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>챙기미 대표 이미지</title>
+<desc>주황색 배경 위에 흰색 달력 아이콘과 작은 하트가 있는 챙기미 서비스 대표 아이콘</desc>
+<rect x="0" y="0" width="680" height="680" rx="120" fill="#FF7A45"/>
+<rect x="170" y="190" width="340" height="320" rx="32" fill="#FFFFFF"/>
+<rect x="170" y="190" width="340" height="86" rx="32" fill="#E8541F"/>
+<rect x="170" y="244" width="340" height="32" fill="#E8541F"/>
+<rect x="232" y="158" width="28" height="70" rx="14" fill="#E8541F"/>
+<rect x="420" y="158" width="28" height="70" rx="14" fill="#E8541F"/>
+<g fill="#FFD9C7">
+<rect x="206" y="312" width="52" height="52" rx="10"/>
+<rect x="276" y="312" width="52" height="52" rx="10"/>
+<rect x="422" y="312" width="52" height="52" rx="10"/>
+<rect x="206" y="380" width="52" height="52" rx="10"/>
+<rect x="422" y="380" width="52" height="52" rx="10"/>
+<rect x="206" y="448" width="52" height="52" rx="10"/>
+<rect x="276" y="448" width="52" height="52" rx="10"/>
+</g>
+<g>
+<path d="M340 460 C300 430 270 405 270 372 C270 348 289 330 312 330 C326 330 338 337 340 348 C342 337 354 330 368 330 C391 330 410 348 410 372 C410 405 380 430 340 460 Z" fill="#FF7A45"/>
+</g>
+</svg>
